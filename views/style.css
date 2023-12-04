@@ -259,3 +259,9 @@ table {
   .detailp{
     /* padding: 10px; */
   }
+  .links{
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    border-bottom: rgba(0, 0,0);
+  }

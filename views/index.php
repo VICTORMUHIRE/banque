@@ -20,14 +20,14 @@ session_start();
 
     if (isset($_POST['submit'])) {
         $admin_user = "admin";
-        $admin_pass = "admin_pass"; // Change this to a secure password in a real-world scenario
+        $admin_pass = "admin"; // Change this to a secure password in a real-world scenario
 
         $input_user = $_POST['username'];
         $input_pass = $_POST['password'];
 
         if ($input_user === $admin_user && $input_pass === $admin_pass) {
             $_SESSION['admin'] = true;
-            header("Location: dashboard.php");
+            header("Location: client.php");
             exit();
         } else {
             echo "Identifiants invalides.";

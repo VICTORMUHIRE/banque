@@ -92,7 +92,61 @@ class Client{
         return null; // Retourne null si aucun enregistrement n'est trouvé
     }
 
-    
+
+    public function verifier_solde($nom) {
+        global $db;
+
+        $requete = "SELECT solde FROM client WHERE nom = ':nom'";
+        $statment = $db->prepare($requete);
+
+        $execution = $statment->execute([':nom' => $nom]);
+       
+        if ($execution){
+            $data = $statment->fetch();             
+            return $data["solde"];
+        } else {
+            return "Client introuvable.";
+        }
+    }
+  
+
+    public function deposer_argent($nom, $montant) {
+        global $db;
+        $requete = "UPDATE client SET solde = solde + $montant WHERE nom = ':nom'";
+        $statment = $db->prepare($requete);
+
+        $execution = $statment->execute([':nom' => $nom]);
+        if ($execution) {
+            echo "$montant $ déposés avec succès.";
+        } else {
+            echo "Erreur lors du dépôt " ;
+        }
+    }
+
+    public function retirer_argent($nom, $montant) {
+        global $db;
+        $requete = "UPDATE client SET solde = solde - $montant WHERE nom = ':nom' AND solde >= $montant";
+        $statment = $db->prepare($requete);
+        $execution = $statment->execute([':nom'=> $nom]);
+        if ( $execution ) {
+            echo "$montant $ retirés avec succès.";
+        } else {
+            echo "Erreur lors du retrait : ";
+        }
+    }
+
+    public function fermer_compte($nom) {
+        global $db;
+        $requete = "DELETE FROM clients WHERE nom = ':nom'";
+        $statment = $db->prepare($requete);
+        $execution = $statment->execute([":nom"=> $nom]);
+
+        if ( $execution ) {
+            echo "Compte fermé avec succès.";
+        } else {
+            echo "Erreur lors de la fermeture du compte : ";
+        }
+    } 
    
     public function getNom()
     {
