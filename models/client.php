@@ -93,7 +93,7 @@ class Client{
     }
 
 
-    public function verifier_solde($nom) {
+    public static function verifier_solde($nom) {
         global $db;
 
         $requete = "SELECT solde FROM client WHERE nom = ':nom'";
@@ -110,7 +110,7 @@ class Client{
     }
   
 
-    public function deposer_argent($nom, $montant) {
+    public static function deposer_argent($nom, $montant) {
         global $db;
         $requete = "UPDATE client SET solde = solde + $montant WHERE nom = ':nom'";
         $statment = $db->prepare($requete);
@@ -123,7 +123,7 @@ class Client{
         }
     }
 
-    public function retirer_argent($nom, $montant) {
+    public static function retirer_argent($nom, $montant) {
         global $db;
         $requete = "UPDATE client SET solde = solde - $montant WHERE nom = ':nom' AND solde >= $montant";
         $statment = $db->prepare($requete);
@@ -135,7 +135,7 @@ class Client{
         }
     }
 
-    public function fermer_compte($nom) {
+    public static function fermer_compte($nom) {
         global $db;
         $requete = "DELETE FROM clients WHERE nom = ':nom'";
         $statment = $db->prepare($requete);

@@ -4,38 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>depot</title>
+    <title>Tarif</title>
 </head>
 <body>
     
     <div class="container">
         <div class="head">
-            <p>Faire un depot</p>
+            <p>Ajouter un Client</p>
         </div>
         <div class="container-child1 container-child">
-            <form action="../controllers/deposerArgent.php" method="POST">                                 
+            <form action="../controllers/fermerCompte.php" method="POST">                                 
                 <div class="div2 div3">
                     <div>
                         <input class="input2" type="text" name="nom" required>
                         <span  class="span1">Nom</span>
-                    </div>
+                    </div>                    
                     
                     <div>
-                        <input class="input2" type="number" name="montant" required>
-                        <span  class="span1">montant</span>
-                    </div>
-                    
-                    <div>
-                        <button type="submit" value="Envoyer">Depot</button>
+                        <button type="submit" value="Envoyer">supprimer</button>
                     </div>
                     
                 </div>
                            
             </form>            
         </div>
-    </div>
-
-
-  
+    </div>  
 </body>
 </html>

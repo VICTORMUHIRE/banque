@@ -13,23 +13,15 @@
             <p>Ajouter un Client</p>
         </div>
         <div class="container-child1 container-child">
-            <form action="../controllers/enregistrerClient.php" method="POST">                                 
+            <form action="../controllers/verifierSolde.php" method="POST">                                 
                 <div class="div2 div3">
                     <div>
                         <input class="input2" type="text" name="nom" required>
                         <span  class="span1">Nom</span>
-                    </div>
-                    <div>
-                        <input class="input2" type="text" name="pasword" required>
-                        <span  class="span1">Password</span>
-                    </div>
-                    <div>
-                        <input class="input2" type="number" name="solde" required>
-                        <span  class="span1">Solde</span>
-                    </div>
+                    </div>                    
                     
                     <div>
-                        <button type="submit" value="Envoyer">Enregistrer</button>
+                        <button type="submit" value="Envoyer">Verifier</button>
                     </div>
                     
                 </div>

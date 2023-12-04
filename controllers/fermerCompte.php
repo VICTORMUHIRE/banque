@@ -6,9 +6,8 @@
 
     $nom = $_POST['nom'];
     
-    function verifier_solde($nom){
-        return Client::verifier_solde( $nom );
-    }
-    
+    function fermer_compte($nom){
+        return Client::fermer_compte( $nom );
+    }    
     
 ?>
