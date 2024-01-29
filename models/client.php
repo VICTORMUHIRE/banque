@@ -91,53 +91,59 @@ class Client{
 
         return null; // Retourne null si aucun enregistrement n'est trouvé
     }
-
+    
 
     public static function verifier_solde($nom) {
         global $db;
 
-        $requete = "SELECT solde FROM client WHERE nom = ':nom'";
-        $statment = $db->prepare($requete);
+        $query = "SELECT solde FROM client WHERE nom = :nom";
+        $statement = $db->prepare($query);
 
-        $execution = $statment->execute([':nom' => $nom]);
-       
-        if ($execution){
-            $data = $statment->fetch();             
-            return $data["solde"];
+        $execution = $statement->execute([':nom' => $nom]);
+
+        if ($execution) {
+            $data = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                return $data['solde'];
+            } else {
+                return "Solde non trouvé pour le client.";
+            }
         } else {
-            return "Client introuvable.";
+            return "Erreur lors de l'exécution de la requête.";
         }
+
     }
   
 
     public static function deposer_argent($nom, $montant) {
         global $db;
-        $requete = "UPDATE client SET solde = solde + $montant WHERE nom = ':nom'";
-        $statment = $db->prepare($requete);
-
-        $execution = $statment->execute([':nom' => $nom]);
+        $requete = "UPDATE client SET solde = solde + :montant WHERE nom = :nom";
+        $statement = $db->prepare($requete);
+    
+        $execution = $statement->execute([':nom' => $nom, ':montant' => $montant]);
         if ($execution) {
-            echo "$montant $ déposés avec succès.";
+            return "$montant $ viennent d'etre deposes dans le compte de ";
         } else {
-            echo "Erreur lors du dépôt " ;
+            return "Erreur lors du dépôt.";
         }
     }
 
     public static function retirer_argent($nom, $montant) {
         global $db;
-        $requete = "UPDATE client SET solde = solde - $montant WHERE nom = ':nom' AND solde >= $montant";
+        $requete = "UPDATE client SET solde = solde - $montant WHERE nom = :nom AND solde >= $montant";
         $statment = $db->prepare($requete);
         $execution = $statment->execute([':nom'=> $nom]);
         if ( $execution ) {
-            echo "$montant $ retirés avec succès.";
+            return "$montant $ viennent d'etre retires dans le compte de ";
         } else {
-            echo "Erreur lors du retrait : ";
+            return "Erreur lors du dépôt.";
         }
     }
 
     public static function fermer_compte($nom) {
         global $db;
-        $requete = "DELETE FROM clients WHERE nom = ':nom'";
+        $requete = "DELETE FROM client WHERE nom = :nom";
         $statment = $db->prepare($requete);
         $execution = $statment->execute([":nom"=> $nom]);
 

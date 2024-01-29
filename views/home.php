@@ -5,25 +5,16 @@ if (!isset($_SESSION['admin'])) {
     header("Location: index.php");
     exit();
 }
-
-// Traitement de la création de compte ici
-
-
-    include '../configuration/configuration.php';
+include '../configuration/configuration.php';
     include '../models/client.php';
 
-    if (isset($_POST['submit'])) {
-        
-        $nom = $_POST['nom'];
-        $montant = $_POST['montant'];
-    }
     function getListeClient(){
         return Client::getClients();
     }
+// Traitement de la création de compte ici
+?>
 
-    
 
-    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +24,7 @@ if (!isset($_SESSION['admin'])) {
     <title>Document</title>
 </head>
 <body class="body1">
-  
+    
     <div class="header">
         <div class="logo">
             <div class="logoImg">
@@ -126,59 +117,73 @@ if (!isset($_SESSION['admin'])) {
            </div>
         </div>
         <div class="container1">
-            <div class="containter-child flex">
-                <div class="montant">
-                    
-                    <p>nouveau un depot</p>
-                                   
-                    <form action="" method="POST">                                 
-                        
-                            <?php 
-                                if (isset($nom) and isset($montant)) {
-                                    # code...
-                                $message = Client::deposer_argent( $nom, $montant );
-                                
-                                $solde = Client::verifier_solde($nom);
-                                $depot=  $solde - $montant;
-
-                                echo '<div>';
-                                    echo $message.$nom;
-                                    echo "<h5>Ancien solde : $depot $</h5>"; 
-                                    echo "<h5>Nouveau solde : $solde $</h5>"; 
-                                echo '</div>';
-                                
-                            }                        
-                            ?>                          
-                          
-                        <div>
-                            <label for="">Nom</label>
-                            <select class="input2" name="nom" required>
-                            
-                            <?php
-                                foreach ($clients = getListeClient() as $client) {
-                                    echo "<option value='" . $client->getNom() . "'>" . $client->getNom() . "</option>";
-                                }
-                                ?>
-                        </select>        
-                        </div>
-                        
-                        <div>
-                            <label for="">Montant</label>
-                            <input class="input2" type="number" name="montant" required>                            
-                        </div>
-                        
-                        <div>
-                            <button type="submit" name="submit" value="Envoyer">Depot</button>
-                        </div>                            
-                                                    
-                    </form>  
+            <div class="containter-child">
+                <div class="ajouter" onclick="popUP()">
+                    <a href="#"><svg id="plus" fill="#000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path class="pat" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z  "/></svg>
+                    <p>Ajouter Client</p></a>
                 </div>
-                        
-                                
+                <div class="Client">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>N°</th>
+                            <th>Nom</th>
+                            <th>password</th>
+                            <th>solde</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id='tableBody'>
+                        <?php
+                            $Clients = getListeClient();
+                            for ($i = 0; $i < count($Clients); $i++) {
+                                echo "<tr>";
+                                echo "<td scope='row'>" . ($i + 1) . "</td>";
+                                echo "<td scope='row'>" . $Clients[$i]->getNom() . "</td>";
+                                echo "<td scope='row'>" . $Clients[$i]->getPasword() . "</td>";
+                                echo "<td scope='row'>" . $Clients[$i]->getSolde() ." $". "</td>";
+                                echo "<td scope='row'> <a id='supprimer' href='delete.php?id=" . $Clients[$i]->getClientId() . "'>Supprimer</a></td>";                                 
+                                echo "</tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                
+                </div>
             </div>
         </div>
     </div> 
-    
-</body>
+    <div class="ajouter-client">     
+        <div class= "client-child">
+            <form action="../controllers/enregistrerClient.php" method="POST">                                 
+                <h2>Ajouter un Client</h2>
+                <div>
+                    <label for="">Nom</label>
+                    <input class="input2" type="text" name="nom" required>
+                    
+                </div>
+                <div>
+                    <label for="">password</label>
+                    <input class="input2" type="text" name="pasword" required>
+                    
+                </div>
+                <div>
+                    <label for="">Solde</label>
+                    <input class="input2" type="number" name="solde" required>
+                    
+                </div>                   
+                <button type="submit" value="Envoyer">Enregistrer</button>         
+            </form>  
+        </div>          
+    </div>   
 
+</body>
+<script>    
+    ajouter_lient = document.querySelector(".ajouter-client");
+
+    function popUP(e) {
+        ajouter_lient.classList.toggle("visible")
+        
+    }
+</script>
 </html>

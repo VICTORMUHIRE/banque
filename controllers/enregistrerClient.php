@@ -10,6 +10,6 @@
     
     $client = new Client ($nom, $pasword, $solde);
     if ($client -> enregistrerClient()){
-        header("Location:../views/client.php");
+        header("Location:../views/home.php");
     }
 ?>

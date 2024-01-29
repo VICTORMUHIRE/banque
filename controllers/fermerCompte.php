@@ -5,9 +5,8 @@
 
 
     $nom = $_POST['nom'];
-    
-    function fermer_compte($nom){
-        return Client::fermer_compte( $nom );
-    }    
+        
+    Client::fermer_compte( $nom );
+       
     
 ?>
